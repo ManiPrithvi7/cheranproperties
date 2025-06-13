@@ -10,7 +10,7 @@ const WelcomeTaskSubmission = () => {
           </h1>
           <p className="text-lg text-gray-600">Submit By manikandan Siva</p>
           <Link
-            className="p-3 bg-gray-700 text-shadow-white rounded-lg mx-auto"
+            className="p-3 bg-gray-300 text-shadow-white rounded-lg mx-auto"
             href={"/hrm/attendance"}
           >
             HRM page
