@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  projectName  String
+  projectTeams Team[]
+}
+
+model Team {
+  // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+  // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+  // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  teamName    String
+  projectId   String
+  project     Project      @relation(references: [id], fields: [projectId])
+  teamMembers TeamMember[]
+}
+
+model TeamMember {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  teamId String
+  team   Team    @relation(references: [id], fields: [teamId])
+  name   String
+  shifts Shift[]
+}
+
+model Shift {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  teamMemberId String
+  teamMember   TeamMember @relation(references: [id], fields: [teamMemberId])
+  date         String
+  status       Boolean
+  periodic     Int[]
+}
